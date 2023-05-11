@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS 'todolist';
+CREATE DATABASE todolist;
 
-CREATE TABLE IF NOT EXISTS "entries" (
+CREATE TABLE  entries (
         what_to_do    VARCHAR(160),
         due_date      VARCHAR(60),
         status      VARCHAR(60)
