@@ -1,6 +1,6 @@
 # RESTful API
 from flask import Flask, render_template, redirect, g, request, url_for, jsonify, Response
-from flask_mysqldb import MySQL
+from flaskext.mysql import MySQL
 import urllib
 import json
 import sqlite3
@@ -9,11 +9,12 @@ DATABASE = 'todolist.db'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config["MYSQL_HOST"] = 'localhost'
-app.config["MYSQL_USER"] = 'root'
-app.config["MYSQL_PASSWORD"] = ''
-app.config["MYSQL_DB"] = 'todolist'
-mysql = MySQL(app)
+mysql = MySQL()
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'todolist'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+mysql.init_app(app)
 
 @app.route("/api/items")  # default method is GET
 def get_items(): # this is the counterpart of show_list() from homework 3
@@ -54,7 +55,9 @@ def get_db():
     current application context.
     """
     if not hasattr(g, 'sql_db'):
-        g.sql_db = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        g.sql_db = cursor
     return g.sql_db
 
 

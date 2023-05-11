@@ -1,10 +1,9 @@
-# This is a simple example web app that is meant to illustrate the basics.
+# Front End
 from flask import Flask, render_template, redirect, g, request, url_for, jsonify, json
 import urllib
-import requests  # similar purpose to urllib.request, just more convenience
+import requests  
 import os
 
-DATABASE = 'todolist.db'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
